@@ -27,5 +27,12 @@ mkdir build
 cd build
 cmake ..
 make -j4
+cd ..
 ```
 
+```
+mkdir dist
+cd dist
+wget https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1/resolve/main/tokenizer.json
+cd ..
+```
