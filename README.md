@@ -16,14 +16,6 @@ $ git submodule update --init --recursive
 $ cd ..
 ```
 
-## (3) Install dictionary
-```
-$ mkdir dist
-$ cd dist
-$ wget https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1/resolve/main/tokenizer.json
-$ cd ..
-```
-
 ## (4) Install Rust
 ```
 $ curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -34,7 +26,15 @@ $ cargo --version
 
 ## 2. Execution
 
-## (1) Build
+## (1) Install dictionary
+```
+$ mkdir dist
+$ cd dist
+$ wget https://huggingface.co/togethercomputer/RedPajama-INCITE-Chat-3B-v1/resolve/main/tokenizer.json
+$ cd ..
+```
+
+## (2) Build
 ```
 $ cd GPT-2
 $ mkdir build
@@ -44,22 +44,22 @@ $ make -j4
 $ cd ..
 ```
 
-## (2) Training
+## (3) Training
 ```
 $ sh scripts/train.sh
 ```
 
-## (3) Test
+## (4) Test
 ```
 $ sh scripts/test.sh
 ```
 
-## (4) Prediction
+## (5) Prediction
 ```
 $ sh scripts/predict.sh
 ```
 
-## (5) Question Answering
+## (6) Question Answering
 ```
 $ sh scripts/question.sh
 ```
