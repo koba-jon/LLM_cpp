@@ -46,7 +46,7 @@ po::options_description parse_arguments(){
         ("stride", po::value<size_t>()->default_value(1), "stride of text sequence")
         ("endoftext", po::value<int>()->default_value(0), "id of <|endoftext|>")
         ("padding", po::value<int>()->default_value(1), "id of <|padding|>")
-        ("temperature", po::value<float>()->default_value(1.0), "the number of token for prediction")
+        ("temperature", po::value<float>()->default_value(1.0), "sampling temperature for prediction")
         ("topk", po::value<size_t>()->default_value(50), "top-k for prediction")
         ("gpu_id", po::value<int>()->default_value(0), "cuda device : 'x=-1' is cpu device")
         ("seed_random", po::value<bool>()->default_value(false), "whether to make the seed of random number in a random")
