@@ -24,7 +24,7 @@ $ rustup default stable
 $ cargo --version
 ```
 
-## 2. Execution
+## 2. Execution (Example: GPT-2)
 
 ```
 $ cd GPT-2
