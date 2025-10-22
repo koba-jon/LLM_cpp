@@ -9,7 +9,7 @@ $ cd LLM_cpp
 ```
 $ git clone https://github.com/mlc-ai/tokenizers-cpp.git
 $ cd tokenizers-cpp
-$ git submodule update --init --recursivecd
+$ git submodule update --init --recursive
 $ cd ..
 ```
 
