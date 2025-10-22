@@ -52,6 +52,7 @@ void question(po::variables_map &vm, torch::Device &device, GPT3 &model, std::sh
         ofs << "Question: " << text << std::endl;
         ids_int = tokenizer->Encode(text);
         ids = std::vector<int64_t>(ids_int.size());
+        for (size_t i = 0; i < ids_int.size(); i++) ids.at(i) = ids_int.at(i);
         input = torch::from_blob(ids.data(), {(long int)ids.size()}, torch::kLong).clone().unsqueeze(0).to(device);
 
         std::cout << "Answer: " << std::flush;
