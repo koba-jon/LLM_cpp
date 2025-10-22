@@ -26,6 +26,9 @@ $ cargo --version
 
 ## 2. Execution
 
+```
+$ cd GPT-2
+```
 ## (1) Install dictionary
 ```
 $ mkdir dist
@@ -36,7 +39,6 @@ $ cd ..
 
 ## (2) Build
 ```
-$ cd GPT-2
 $ mkdir build
 $ cd build
 $ cmake ..
