@@ -48,7 +48,7 @@ void question(po::variables_map &vm, torch::Device &device, GPT2 &model, std::sh
     while (1){
         
         std::cout << "Question: " << std::flush;
-        std::cin >> text;
+        std::getline(std::cin >> std::ws, text);
         ofs << "Question: " << text << std::endl;
         ids_int = tokenizer->Encode(text);
         ids = std::vector<int64_t>(ids_int.size());
