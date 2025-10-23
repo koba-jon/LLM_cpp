@@ -182,7 +182,7 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
             // c3. Save Model Weights and Optimizer Parameters
             // -----------------------------------
             iter = show_progress->get_iters();
-            if (iter % save_model_iter == 1){
+            if (iter % save_model_iter == 0){
                 path = checkpoint_dir + "/models/epoch_latest.pth";  torch::save(model, path);
                 path = checkpoint_dir + "/optims/epoch_latest.pth";  torch::save(optimizer, path);
                 infoo.open(checkpoint_dir + "/models/info.txt", std::ios::out);
