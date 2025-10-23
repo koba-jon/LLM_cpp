@@ -136,6 +136,7 @@ datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<
     this->padding = padding_;
     for (size_t i = 0; i < this->paths.size(); i++){
         torch::Tensor text = datasets::Text_Loader(this->paths.at(i), this->tokenizer, this->sequence, this->stride, this->endoftext, this->padding);
+        this->texts.push_back(text);
         for (long int j = 0; j < text.numel() - this->sequence; j += stride){
             this->paths_idx.push_back(i);
             this->offset_idx.push_back(j);
@@ -148,9 +149,8 @@ datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<
 // namespace{datasets} -> class{TextFolder} -> function{get}
 // -------------------------------------------------------------------------
 void datasets::TextFolder::get(const size_t idx, std::tuple<torch::Tensor, torch::Tensor> &data){
-    torch::Tensor text = datasets::Text_Loader(this->paths.at(this->paths_idx.at(idx)), this->tokenizer, this->sequence, this->stride, this->endoftext, this->padding);
-    torch::Tensor text_in = text.index({Slice(this->offset_idx.at(idx), this->offset_idx.at(idx) + this->sequence)}).contiguous();
-    torch::Tensor text_out = text.index({Slice(this->offset_idx.at(idx) + 1, this->offset_idx.at(idx) + 1 + this->sequence)}).contiguous();
+    torch::Tensor text_in = this->texts[this->paths_idx.at(idx)].index({Slice(this->offset_idx.at(idx), this->offset_idx.at(idx) + this->sequence)}).contiguous();
+    torch::Tensor text_out = this->texts[this->paths_idx.at(idx)].index({Slice(this->offset_idx.at(idx) + 1, this->offset_idx.at(idx) + 1 + this->sequence)}).contiguous();
     data = {text_in.detach().clone(), text_out.detach().clone()};
     return;
 }

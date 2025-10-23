@@ -32,6 +32,7 @@ namespace datasets{
         long int sequence, stride;
         std::vector<size_t> paths_idx, offset_idx;
         int endoftext, padding;
+        std::vector<torch::Tensor> texts;
     public:
         TextFolder(){}
         TextFolder(const std::string &root, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer_, const long int &sequence_, const long int &stride_, const int &endoftext_, const int &padding_);
