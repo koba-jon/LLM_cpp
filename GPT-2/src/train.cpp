@@ -79,7 +79,7 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
     }
 
     // (3) Set Optimizer Method
-    auto optimizer = torch::optim::Adam(model->parameters(), torch::optim::AdamOptions(vm["lr"].as<float>()).betas({vm["beta1"].as<float>(), vm["beta2"].as<float>()}));
+    auto optimizer = torch::optim::AdamW(model->parameters(), torch::optim::AdamWOptions(vm["lr"].as<float>()).betas({vm["beta1"].as<float>(), vm["beta2"].as<float>()}).weight_decay(vm["weight_decay"].as<float>()));
 
     // (4) Set Loss Function
     auto criterion = Loss();

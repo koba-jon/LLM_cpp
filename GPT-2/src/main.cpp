@@ -87,8 +87,9 @@ po::options_description parse_arguments(){
 
         // (7) Define for Network Parameter
         ("lr", po::value<float>()->default_value(1e-4), "learning rate")
-        ("beta1", po::value<float>()->default_value(0.9), "beta 1 in Adam of optimizer method")
-        ("beta2", po::value<float>()->default_value(0.999), "beta 2 in Adam of optimizer method")
+        ("beta1", po::value<float>()->default_value(0.9), "beta 1 in AdamW of optimizer method")
+        ("beta2", po::value<float>()->default_value(0.999), "beta 2 in AdamW of optimizer method")
+        ("weight_decay", po::value<float>()->default_value(0.01), "weight decay of AdamW")
         ("emb_dim", po::value<size_t>()->default_value(1024), "embedding feature dimensions")
         ("n_heads", po::value<size_t>()->default_value(16), "the number of heads")
         ("n_layers", po::value<size_t>()->default_value(24), "the number of layers")
