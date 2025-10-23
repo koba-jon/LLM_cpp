@@ -36,6 +36,7 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
     constexpr size_t train_workers = 4;  // the number of workers to retrieve data from the training dataset
     constexpr bool valid_shuffle = true;  // whether to shuffle the validation dataset
     constexpr size_t valid_workers = 4;  // the number of workers to retrieve data from the validation dataset
+    constexpr size_t save_model_iter = 1000;  // iterations to save the model
 
     // -----------------------------------
     // a0. Initialization and Declaration
@@ -44,6 +45,7 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
     size_t epoch;
     size_t total_iter;
     size_t start_epoch, total_epoch;
+    size_t iter;
     std::string date, date_out;
     std::string buff, latest;
     std::string checkpoint_dir, path;
@@ -175,6 +177,18 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
             show_progress->increment(/*loss_value=*/{loss.item<float>()});
             ofs << "iters:" << show_progress->get_iters() << '/' << total_iter << ' ' << std::flush;
             ofs << "ce:" << loss.item<float>() << "(ave:" <<  show_progress->get_ave(0) << ')' << std::endl;
+
+            // -----------------------------------
+            // c3. Save Model Weights and Optimizer Parameters
+            // -----------------------------------
+            iter = show_progress->get_iters();
+            if (iter % save_model_iter == 1){
+                path = checkpoint_dir + "/models/epoch_latest.pth";  torch::save(model, path);
+                path = checkpoint_dir + "/optims/epoch_latest.pth";  torch::save(optimizer, path);
+                infoo.open(checkpoint_dir + "/models/info.txt", std::ios::out);
+                infoo << "latest = " << epoch - 1 << std::endl;
+                infoo.close();
+            }
 
         }
 
