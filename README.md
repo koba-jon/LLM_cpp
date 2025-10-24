@@ -24,7 +24,6 @@ CPU : https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-dep
 ***
 
 ### (3) Install Boost
-This is used for command line arguments, etc. <br>
 ~~~
 $ sudo apt install libboost-dev libboost-all-dev
 ~~~
