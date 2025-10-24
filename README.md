@@ -8,7 +8,28 @@ $ git clone https://github.com/koba-jon/LLM_cpp.git
 $ cd LLM_cpp
 ```
 
-### (2) Install tokenizers
+### (2) Download PyTorch C++
+Please select the environment to use as follows on PyTorch official. <br>
+PyTorch official : https://pytorch.org/ <br>
+***
+PyTorch Build : Preview (Nightly) <br>
+Your OS : Linux <br>
+Package : LibTorch <br>
+Language : C++ / Java <br>
+Run this Command : Download here (cxx11 ABI) <br>
+CUDA 12.6 : https://download.pytorch.org/libtorch/nightly/cu126/libtorch-shared-with-deps-latest.zip <br>
+CUDA 12.8 : https://download.pytorch.org/libtorch/nightly/cu128/libtorch-shared-with-deps-latest.zip <br>
+CUDA 13.0 : https://download.pytorch.org/libtorch/nightly/cu130/libtorch-shared-with-deps-latest.zip <br>
+CPU : https://download.pytorch.org/libtorch/nightly/cpu/libtorch-shared-with-deps-latest.zip <br>
+***
+
+### (3) Install Boost
+This is used for command line arguments, etc. <br>
+~~~
+$ sudo apt install libboost-dev libboost-all-dev
+~~~
+
+### (4) Install tokenizers
 ```
 $ git clone https://github.com/mlc-ai/tokenizers-cpp.git
 $ cd tokenizers-cpp
@@ -16,7 +37,7 @@ $ git submodule update --init --recursive
 $ cd ..
 ```
 
-### (3) Install Rust
+### (5) Install Rust
 ```
 $ curl https://sh.rustup.rs -sSf | sh -s -- -y
 $ source $HOME/.cargo/env
