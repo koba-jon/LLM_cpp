@@ -5,6 +5,8 @@
 // For Original Header
 #include "loss.hpp"
 
+using torch::indexing::Slice;
+
 
 // -----------------------------------
 // class{Loss} -> constructor
@@ -18,7 +20,7 @@ Loss::Loss(int ignore_index){
 // class{Loss} -> operator
 // -----------------------------------
 torch::Tensor Loss::operator()(torch::Tensor input, torch::Tensor target){
-    input = input.view({-1, input.size(2)});
-    target = target.view({-1});
+    input = input.index({Slice(), -1, Slice()});
+    target = target.index({Slice(), -1});
     return criterion(input, target);
 }
