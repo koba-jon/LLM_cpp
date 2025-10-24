@@ -13,7 +13,7 @@ class Loss{
 private:
     torch::nn::CrossEntropyLoss criterion;
 public:
-    Loss();
+    Loss(int ignore_index);
     torch::Tensor operator()(torch::Tensor input, torch::Tensor target);
 };
 

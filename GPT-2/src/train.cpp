@@ -84,7 +84,7 @@ void train(po::variables_map &vm, torch::Device &device, GPT2 &model, std::share
     auto optimizer = torch::optim::AdamW(model->parameters(), torch::optim::AdamWOptions(vm["lr"].as<float>()).betas({vm["beta1"].as<float>(), vm["beta2"].as<float>()}).weight_decay(vm["weight_decay"].as<float>()));
 
     // (4) Set Loss Function
-    auto criterion = Loss();
+    auto criterion = Loss(vm["padding"].as<int>());
 
     // (5) Make Directories
     checkpoint_dir = "checkpoints/" + vm["dataset"].as<std::string>();

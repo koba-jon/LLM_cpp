@@ -49,7 +49,7 @@ void test(po::variables_map &vm, torch::Device &device, GPT2 &model, std::shared
     torch::load(model, path, device);
 
     // (3) Set Loss Function
-    auto criterion = Loss();
+    auto criterion = Loss(vm["padding"].as<int>());
 
     // (4) Initialization of Value
     ave_loss = 0.0;

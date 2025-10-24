@@ -9,8 +9,8 @@
 // -----------------------------------
 // class{Loss} -> constructor
 // -----------------------------------
-Loss::Loss(){
-    this->criterion = torch::nn::CrossEntropyLoss(torch::nn::CrossEntropyLossOptions().reduction(torch::kMean));
+Loss::Loss(int ignore_index){
+    this->criterion = torch::nn::CrossEntropyLoss(torch::nn::CrossEntropyLossOptions().ignore_index(ignore_index).reduction(torch::kMean));
 }
 
 
