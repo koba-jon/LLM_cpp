@@ -20,7 +20,6 @@ Loss::Loss(int ignore_index){
 // class{Loss} -> operator
 // -----------------------------------
 torch::Tensor Loss::operator()(torch::Tensor input, torch::Tensor target){
-    input = input.index({Slice(), -1, Slice()});
-    target = target.index({Slice(), -1});
-    return criterion(input, target);
+    torch::Tensor loss = criterion(input.view({-1, input.size(2)}), target.view({-1}));
+    return loss;
 }
