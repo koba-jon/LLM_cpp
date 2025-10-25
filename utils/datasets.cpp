@@ -128,15 +128,13 @@ torch::Tensor datasets::Text_Loader_Predict(const std::string &path, const std::
 // -------------------------------------------------------------------------
 // namespace{datasets} -> class{TextFolder} -> constructor
 // -------------------------------------------------------------------------
-datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer_, const long int &sequence_, const long int &stride, const int &endoftext_, const int &padding_){
-    datasets::collect(root, this->paths);
-    std::sort(this->paths.begin(), this->paths.end());
-    this->tokenizer = tokenizer_;
+datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer, const long int &sequence_, const long int &stride, const int &endoftext, const int &padding){
+    std::vector<std::string> paths;
+    datasets::collect(root, paths);
+    std::sort(paths.begin(), paths.end());
     this->sequence = sequence_;
-    this->endoftext = endoftext_;
-    this->padding = padding_;
-    for (size_t i = 0; i < this->paths.size(); i++){
-        torch::Tensor text = datasets::Text_Loader(this->paths.at(i), this->tokenizer, this->sequence, this->endoftext, this->padding);
+    for (size_t i = 0; i < paths.size(); i++){
+        torch::Tensor text = datasets::Text_Loader(paths.at(i), tokenizer, this->sequence, endoftext, padding);
         this->texts.push_back(text);
         for (long int j = 0; j < text.numel() - this->sequence; j += stride){
             this->paths_idx.push_back(i);
