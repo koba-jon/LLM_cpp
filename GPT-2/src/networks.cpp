@@ -70,7 +70,7 @@ torch::Tensor MultiHeadAttentionImpl::forward(torch::Tensor x){
 
     attn_scores = queries.matmul(keys.transpose(2, 3));  // {N,H,S,S}
     mask_bool = this->mask.index({Slice(torch::indexing::None, x.size(1)), Slice(torch::indexing::None, x.size(1))});  // {S,S}
-    attn_scores.masked_fill(mask_bool, -std::numeric_limits<float>::infinity());  // {N,H,S,S}
+    attn_scores = attn_scores.masked_fill(mask_bool, -std::numeric_limits<float>::infinity());  // {N,H,S,S}
     attn_weights = torch::softmax((attn_scores / std::sqrt(keys.size(3))), -1);  // {N,H,S,S}
     attn_weights = this->dropout->forward(attn_weights);  // {N,H,S,S}
     context_vec = attn_weights.matmul(values).transpose(1, 2);  // {N,S,H,HD}
