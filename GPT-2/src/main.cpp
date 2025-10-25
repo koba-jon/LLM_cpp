@@ -75,7 +75,7 @@ po::options_description parse_arguments(){
         // (5) Define for Prediction
         ("predict", po::value<bool>()->default_value(false), "prediction mode on/off")
         ("predict_dir", po::value<std::string>()->default_value("predict"), "prediction data directory : ./datasets/<dataset>/<predict_dir>/<data files>")
-        ("predict_token", po::value<size_t>()->default_value(3000), "the number of token for prediction")
+        ("predict_token", po::value<size_t>()->default_value(5000), "the number of token for prediction")
         ("predict_load_epoch", po::value<std::string>()->default_value("latest"), "training epoch used for prediction")
         ("predict_result_dir", po::value<std::string>()->default_value("predict_result"), "prediction result directory : ./<predict_result_dir>")
 
