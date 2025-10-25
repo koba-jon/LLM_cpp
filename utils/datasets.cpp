@@ -63,7 +63,7 @@ void datasets::collect(const std::string root, const std::string sub, std::vecto
 // -----------------------------------------------
 // namespace{datasets} -> function{Text_Loader}
 // -----------------------------------------------
-torch::Tensor datasets::Text_Loader(const std::string &path, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer, const long int &sequence, const long int &stride, const int &endoftext, const int &padding){
+torch::Tensor datasets::Text_Loader(const std::string &path, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer, const long int &sequence, const int &endoftext, const int &padding){
 
     std::ifstream ifs;
     std::istreambuf_iterator<char> it, last;
@@ -78,9 +78,11 @@ torch::Tensor datasets::Text_Loader(const std::string &path, const std::shared_p
     str = std::string(it, last);
     if (!str.empty() && str.back() == '\n') str.pop_back();
     ids_int = tokenizer->Encode(str);
+    
     ids_int.push_back(endoftext);
-    while(ids_int.size() <= (size_t)sequence) ids_int.push_back(padding);
-    while((ids_int.size() - sequence - 1) % stride != 0) ids_int.push_back(padding);
+    ids_int.insert(ids_int.begin(), sequence - 1, padding);
+    ids_int.insert(ids_int.end(), sequence - 1, padding);
+    
     ids = std::vector<int64_t>(ids_int.size());
     for (size_t i = 0; i < ids_int.size(); i++) ids.at(i) = ids_int.at(i);
     ifs.close();
@@ -126,16 +128,15 @@ torch::Tensor datasets::Text_Loader_Predict(const std::string &path, const std::
 // -------------------------------------------------------------------------
 // namespace{datasets} -> class{TextFolder} -> constructor
 // -------------------------------------------------------------------------
-datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer_, const long int &sequence_, const long int &stride_, const int &endoftext_, const int &padding_){
+datasets::TextFolder::TextFolder(const std::string &root, const std::shared_ptr<tokenizers::Tokenizer> &tokenizer_, const long int &sequence_, const long int &stride, const int &endoftext_, const int &padding_){
     datasets::collect(root, this->paths);
     std::sort(this->paths.begin(), this->paths.end());
     this->tokenizer = tokenizer_;
     this->sequence = sequence_;
-    this->stride = stride_;
     this->endoftext = endoftext_;
     this->padding = padding_;
     for (size_t i = 0; i < this->paths.size(); i++){
-        torch::Tensor text = datasets::Text_Loader(this->paths.at(i), this->tokenizer, this->sequence, this->stride, this->endoftext, this->padding);
+        torch::Tensor text = datasets::Text_Loader(this->paths.at(i), this->tokenizer, this->sequence, this->endoftext, this->padding);
         this->texts.push_back(text);
         for (long int j = 0; j < text.numel() - this->sequence; j += stride){
             this->paths_idx.push_back(i);
